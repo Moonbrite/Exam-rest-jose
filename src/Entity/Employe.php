@@ -23,8 +23,13 @@ use Symfony\Component\Serializer\Attribute\Groups;
 #[GetCollection(security: "is_granted('ROLE_USER')")]
 #[ApiResource(
     operations: [
-        new Post(processor: UserPasswordHasher::class),
-        new Put(processor: UserPasswordHasher::class,denormalizationContext: ['groups' => ['update']]),
+        new Post(
+            processor: UserPasswordHasher::class,
+            uriTemplate: "/employes/register"
+        ),
+        new Put(
+            processor: UserPasswordHasher::class,
+            denormalizationContext: ['groups' => ['update']],),
     ],
     security: "is_granted('ROLE_ADMIN')",
     denormalizationContext: ['groups' => ['register']],
