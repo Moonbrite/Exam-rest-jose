@@ -19,21 +19,19 @@ use Symfony\Component\Serializer\Attribute\Groups;
 
 #[ApiResource(paginationItemsPerPage: 10)]
 #[Get(security: "is_granted('ROLE_USER','ROLE_ADMIN')")]
-#[Put(security: "is_granted('ROLE_ADMIN')")]
-#[Post(security: "is_granted('ROLE_ADMIN')")]
 #[Delete(security: "is_granted('ROLE_ADMIN')")]
-#[Patch(security: "is_granted('ROLE_ADMIN')")]
 #[GetCollection(security: "is_granted('ROLE_USER')")]
-#[ORM\Entity(repositoryClass: EmployeRepository::class)]
 #[ApiResource(
     operations: [
         new Post(processor: UserPasswordHasher::class),
         new Put(processor: UserPasswordHasher::class,denormalizationContext: ['groups' => ['update']]),
-        new Patch(processor: UserPasswordHasher::class,denormalizationContext: ['groups' => ['update']]),
+
     ],
+    security: "is_granted('ROLE_ADMIN')",
     denormalizationContext: ['groups' => ['register']],
 )]
 #[UniqueEntity('username')]
+#[ORM\Entity(repositoryClass: EmployeRepository::class)]
 class Employe implements UserInterface, PasswordAuthenticatedUserInterface
 {
     #[ORM\Id]
