@@ -25,7 +25,6 @@ use Symfony\Component\Serializer\Attribute\Groups;
     operations: [
         new Post(processor: UserPasswordHasher::class),
         new Put(processor: UserPasswordHasher::class,denormalizationContext: ['groups' => ['update']]),
-
     ],
     security: "is_granted('ROLE_ADMIN')",
     denormalizationContext: ['groups' => ['register']],
